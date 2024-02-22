@@ -44,4 +44,10 @@ public class EmployeeController {
         employeeService.deleteEmployee(employeeId);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
+
+    @PutMapping(value = "/employee")
+    public ResponseEntity<EmployeeDto> updateEmployee(@RequestBody EmployeeDto employeeDto) throws EmployeeNotFoundException {
+        EmployeeDto createdEmployee = employeeService.updateEmployee(employeeDto);
+        return new ResponseEntity<>(createdEmployee,HttpStatus.OK);
+    }
 }

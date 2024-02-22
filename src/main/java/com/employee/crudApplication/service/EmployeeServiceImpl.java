@@ -47,4 +47,18 @@ public class EmployeeServiceImpl implements EmployeeService {
         }
         employeeRepository.deleteById(employeeId);
     }
+
+    @Override
+    public EmployeeDto updateEmployee(EmployeeDto employeeDto) throws EmployeeNotFoundException {
+        Optional<Employee> retrievedEmployee = employeeRepository.findById(employeeDto.getId());
+        if(retrievedEmployee.isEmpty()){
+            throw new EmployeeNotFoundException();
+        }
+        Employee employee = retrievedEmployee.get();
+        employee.setName(employeeDto.getName());
+        employee.setDepartment(employeeDto.getDepartment());
+        Employee createdEmployee = employeeRepository.save(employee);
+        return EmployeeMapper.mapToEmployeeDto(createdEmployee);
+
+    }
 }
